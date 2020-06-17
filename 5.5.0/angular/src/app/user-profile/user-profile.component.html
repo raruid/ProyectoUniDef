@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BlankApp">
+
+<head>
+    <title>Perfil de usuario</title>
+    <style>
+
+        .header{
+            text-align: center;
+            height: 300px;
+            padding: 12px;
+            background-color:currentColor;
+        }
+
+        .seguidores-seguidos{
+            text-align: left;
+        }
+
+        .crear-nuevo-evento{
+            text-align: left;
+        }
+
+        .editar-perfil{
+            text-align: right;
+        }
+
+        .avatar{
+            border-radius: 50%;
+        }
+
+        .user-name{
+            font-size: 18px;
+            margin-top: 14px;
+            color: ghostwhite;
+        }
+
+        a{
+            text-decoration: none;
+            color: currentColor;
+        }
+
+        a:hover{
+            color: darkorange;
+        }
+
+        .profile-info-left {
+            top: -92px;
+            list-style: none;
+        }
+
+        .profile-info-left ul{
+            list-style: none;
+        }
+        
+        .profile-info-left h2 {
+            font-family: "josefinslab-semibold";
+            margin-bottom: 30px;
+        }
+
+        .profile-info-left .section {
+            margin-top: 50px;
+            list-style: none;
+        }
+        .profile-info-left .section h3 {
+            font-size: 1.1em;
+            font-weight: 700;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .profile-info-right .tab-content {
+            padding: 30px 0;
+            background-color: transparent;
+        }
+
+        @media screen and (max-width: 768px) {
+            .profile-info-right {
+                position: relative;
+            }
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            cursor: pointer;
+            }
+
+        .nav-pills > li > a {
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+        .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+            background-color: #1688ae;
+        }
+
+        .nav-tabs.tabs-iconized > li a,
+        .nav-pills.tabs-iconized > li a {
+            padding-top: 0;
+            padding-bottom: 5px;
+        }
+            
+        .nav-tabs.tabs-iconized > li i,
+        .nav-pills.tabs-iconized > li i {
+            position: relative;
+            margin-right: 3px;
+            top: 4px;
+            font-size: 24px;
+        }
+
+        .tab-content {
+            padding: 30px 15px 15px 15px;
+            background-color: #fff;
+        }
+
+        .nav.nav-tabs-custom-colored > li > a {
+            border-color: #ccc;
+            border-bottom: transparent;
+        }
+    
+        .nav.nav-tabs-custom-colored > li > a:hover, .nav.nav-tabs-custom-colored > li > a:focus {
+            background-color: #1688ae;
+        }
+
+        .nav-tabs.nav-tabs-custom-colored {
+            border-bottom-color: #1688ae;
+        }
+
+        .nav-tabs.nav-tabs-custom-colored > li {
+            z-index: 0;
+            margin-bottom: 0;
+            background-color: #fff;
+        }
+        
+        .nav-tabs.nav-tabs-custom-colored > li > a {
+            -moz-border-radius-topleft: 2px;
+            -webkit-border-top-left-radius: 2px;
+            border-top-left-radius: 2px;
+            -moz-border-radius-topright: 2px;
+            -webkit-border-top-right-radius: 2px;
+            border-top-right-radius: 2px;
+            color: #696565;
+            margin-right: 0;
+        }
+    
+        .nav-tabs.nav-tabs-custom-colored > li > a:hover, .nav-tabs.nav-tabs-custom-colored > li > a:focus {
+            color: #fff;
+            border-color: #1688ae;
+        }
+            
+        .nav-tabs.nav-tabs-custom-colored > li.active > a, .nav-tabs.nav-tabs-custom-colored > li.active > a:hover, .nav-tabs.nav-tabs-custom-colored > li.active > a:focus {
+            color: #fff;
+            background-color: #1688ae;
+            border-color: #1688ae;
+            border-bottom: transparent;
+        }
+    
+        .nav-tabs > li.active {
+            z-index: 1;
+        }
+
+        
+        .nav-pills-custom-minimal {
+            border-bottom: 1px solid #ccc;
+        }
+    
+        .nav-pills-custom-minimal > li > a {
+            -moz-border-radius: 0;
+            -webkit-border-radius: 0;
+            border-radius: 0;
+            padding: 10px;
+            border-top: 4px solid transparent;
+            color: #696565;
+        }
+        
+        .nav-pills-custom-minimal > li > a:hover, .nav-pills-custom-minimal > li > a:focus {
+            background-color: transparent;
+            color: #4f4c4c;
+        }
+        
+        .nav-pills-custom-minimal > li.active > a, .nav-pills-custom-minimal > li.active > a:hover, .nav-pills-custom-minimal > li.active > a:focus {
+            background-color: transparent;
+            border-top-color: #94c632;
+            color: #696565;
+        }
+        
+        .nav-pills-custom-minimal > li + li {
+            margin-left: 30px;
+        }
+        
+        @media screen and (max-width: 480px) {
+        
+            .nav-pills-custom-minimal > li + li {
+                margin-left: 0;
+        }
+        }
+
+        .nav-pills-custom-minimal.custom-minimal-bottom > li a {
+            border-top: none;
+            border-bottom: 4px solid transparent;
+        }
+        
+        .nav-pills-custom-minimal.custom-minimal-bottom > li.active > a, .nav-pills-custom-minimal.custom-minimal-bottom > li.active > a:hover, .nav-pills-custom-minimal.custom-minimal-bottom > li.active > a:focus {
+            border-bottom-color: #94c632;
+        }
+         
+
+    </style>
+</head>
+
+<body ng-cloak ng-controller="MainCtrl">
+    <div class="header">
+        <img class="avatar" alt="User" height="192" src="assets/images/user.png" width="192"/>
+        <h1 class="user-name">{{usuarioDatos.userName}}</h1>
+        <div class="crear-nuevo-evento">
+            <button type="button" class="btn btn-primary" (click)="createEvento()">Nuevo Evento</button>
+        </div>
+        <div class="editar-perfil">
+            <button type="button" class="btn btn-success" (click)="editUser()">Editar Perfil</button>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="profile-info-left">
+            <div class="section">
+                <h3>Datos personales</h3>
+                <ul>
+                    <li>Nombre: {{usuarioDatos.name }}  {{usuarioDatos.surname}}</li>
+                    <li>Edad: {{usuarioDatos.age}}</li>
+                    <li>Lo que estudio: {{usuarioDatos.studyingAt}}</li>
+                    <li>Mis gustos: {{usuarioDatos.aboutMe}}</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h3>Statistics</h3>
+                <p><span class="badge">332</span> Following</p>
+                <p><span class="badge">124</span> Followers</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="profile-info-right">
+            <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
+                <li class="active"><a href="#activos" data-toggle="tab">Eventos Activos</a></li>
+                <li><a href="#seguidores" data-toggle="tab">Seguidores</a></li>
+                <li><a href="#seguidos" data-toggle="tab">Seguidos</a></li>
+            </ul>
+            <div class="tab-content">
+                <!-- activities -->
+                <div class="tab-pane fade in active" id="activos">
+                    <div>
+                        <h2><mat-icon>star</mat-icon> {{ "Eventos Activos" | localize }}</h2>
+                    </div>
+                    <table class="table table-hover table-striped" [busy]="isTableLoading">
+                        <thead>
+                            <tr>
+                                <th>{{ "Nombre" | localize }}</th>
+                                <th>{{ "Fecha" | localize }}</th>
+                                <th>{{ "Hora" | localize }}</th>
+                                <th>{{ "Actions" | localize }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="
+                    let evento of (eventosUsuario
+                      | paginate
+                        : {
+                            id: 'server',
+                            itemsPerPage: pageSize,
+                            currentPage: pageNumber,
+                            totalItems: totalItems
+                          })
+                  ">
+                                <td><a [routerLink]="['/app/catalogo/evento',evento.id]">{{ evento.nombreEvento }}</a></td>
+                                <td>{{ evento.fecha }}</td>
+                                <td>{{ evento.hora }}</td>
+                                <td>
+                                    <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
+                                        <mat-icon>menu</mat-icon>
+                                    </button>
+                                    <mat-menu #actionsMenu="matMenu">
+                                        <button mat-menu-item (click)="editEvento(evento)">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>{{ "Edit" | localize }}</span>
+                                        </button>
+                                        <button mat-menu-item (click)="delete(evento)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>{{ "Delete" | localize }}</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="seguidores">
+                    <div>
+                        <h2><mat-icon>person</mat-icon> {{ "Seguidores" | localize }}</h2>
+                    </div>
+                    <table class="table table-hover table-striped" [busy]="isTableLoading">
+                        <thead>
+                            <tr>
+                                <th>{{ "Nombre" | localize }}</th>
+                                <th>{{ "Edad" | localize }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="
+                    let user of (seguidores.usuariosSeguidores)
+                  ">
+                                <td><a [routerLink]="['/app/usuarios',user.id]">{{ user.name }}</a></td>
+                                <td>{{ user.age }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="seguidos">
+                    <div>
+                        <h2><mat-icon>person_outline</mat-icon> {{ "Seguidos" | localize }}</h2>
+                    </div>
+                    <table class="table table-hover table-striped" [busy]="isTableLoading">
+                        <thead>
+                            <tr>
+                                <th>{{ "Nombre" | localize }}</th>
+                                <th>{{ "Edad" | localize }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="
+                    let user2 of (seguidos.usuariosSeguidos)
+                  ">
+                                <td><a [routerLink]="['/app/usuarios',user2.id]">{{ user2.name }}</a></td>
+                                <td>{{ user2.age }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

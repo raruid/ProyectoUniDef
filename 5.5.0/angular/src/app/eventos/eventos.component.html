@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BlankApp">
+
+<head>
+    <title>Evento</title>
+    <style>
+        .header{
+            text-align: center;
+            height: 300px;
+            padding: 12px;
+            background-color: currentColor;
+        }
+
+        .nombreEvento{
+            color:ghostwhite;
+        }
+
+        .botonIzquierda{
+            text-align: left;
+        }
+
+        .botonDerecha{
+            text-align: right;
+        }
+
+        .botonDerecha a{
+            text-decoration: none;
+            color: ghostwhite;
+        }
+
+        .avatar{
+            padding: 15;
+        }
+
+        .panel-body ul{
+            list-style: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 class="nombreEvento">{{evento.nombreEvento}}</h1>
+        <!--<h1 class="nombreEvento">Id del creador {{evento.creatorUserId}}</h1>
+        <h1 class="nombreEvento">Id del user {{usuarioLogado.id}}</h1>-->
+        <img class="avatar" alt="User" height="136" src="assets/images/user.png" width="136"/>
+        <div *ngIf="asistente.usuarioAsistenteId == usuarioLogado.id; else desapuntar">
+            <button type="button" class="btn btn-danger" (click)="dejarDeAsistir(this._id)">Desapuntarse del evento</button>
+        </div>
+        <ng-template #desapuntar>
+            <div>
+                <button type="button" class="btn btn-success" (click)="asistirEvento(this._id)">Apuntarse al evento</button>
+            </div>
+        </ng-template>
+        <div class="botonDerecha" *ngIf="evento.creatorUserId != usuarioLogado.id">
+            <button type="button" class="btn btn-primary"><a [routerLink]="['/app/usuarios',evento.creatorUserId]">Información del creador</a></button>
+        </div>
+        <div class="botonDerecha" *ngIf="evento.creatorUserId == usuarioLogado.id">
+            <button type="button" class="btn btn-primary"><a [routerLink]="['/app/perfil']">Información del creador</a></button>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Información del evento</div>
+            <div class="panel-body">
+                <ul>
+                    <li>Fecha: {{evento.fecha}}</li>
+                    <li>Hora: {{evento.hora}}</li>
+                    <li>Aforo Maximo: {{evento.aforoMaximo}} personas</li>
+                    <li>Requisitos: {{evento.requisitos}}</li>
+                    <li>Descripción: {{evento.descripcion_Evento}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div>
+            <div>
+                <h2><mat-icon>person_outline</mat-icon> {{ "Asistentes" | localize }}</h2>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>
