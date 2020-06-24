@@ -13,7 +13,7 @@
                                    [(ngModel)]="evento.nombreEvento"
                                    required
                                    minlength="2"
-                                   maxlength="32" />
+                                   maxlength="100" />
                         </mat-form-field>
 
                         <mat-form-field>
@@ -69,14 +69,14 @@
     </mat-dialog-content>
     <div mat-dialog-actions align="end">
         <button mat-button type="button" [disabled]="saving" (click)="close(false)">
-            {{ "Cancel" | localize }}
+            {{ "Cancelar" | localize }}
         </button>
         <button mat-flat-button
                 type="submit"
                 flex="15"
                 color="primary"
                 [disabled]="!createEventoForm.form.valid || saving">
-            {{ "Save" | localize }}
+            {{ "Guardar" | localize }}
         </button>
     </div>
 </form>

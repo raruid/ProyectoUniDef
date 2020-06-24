@@ -11,6 +11,10 @@ namespace UniDef.AsistentesApp.Dto
         public AsistenteMapProfile()
         {
             CreateMap<Asistente, AsistenteDto>().ReverseMap();
+            CreateMap<Asistente, AsistenteDatosDto>()
+                .ForMember(se => se.Name, opts => opts.MapFrom(se => se.UsuarioAsistente.Name))
+                .ForMember(se => se.Age, opts => opts.MapFrom(se => se.UsuarioAsistente.Age))
+                .ReverseMap();
         }
     }
 }

@@ -41,7 +41,7 @@
                             <th>{{ "Hora" | localize }}</th>
                             <th>{{ "Descripcion" | localize }}</th>
                             <th>{{ "Requisitos" | localize }}</th>
-                            <th>{{ "Actions" | localize }}</th>
+                            <th>{{ "Aforo" | localize }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,21 +61,6 @@
                             <td>{{ evento.descripcion_Evento }}</td>
                             <td>{{ evento.requisitos }}</td>
                             <td>{{ evento.aforoMaximo }}</td>
-                            <td>
-                                <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
-                                    <mat-icon>menu</mat-icon>
-                                </button>
-                                <mat-menu #actionsMenu="matMenu">
-                                    <button mat-menu-item (click)="editEvento(evento)">
-                                        <mat-icon>edit</mat-icon>
-                                        <span>{{ "Edit" | localize }}</span>
-                                    </button>
-                                    <button mat-menu-item (click)="delete(evento)">
-                                        <mat-icon>delete</mat-icon>
-                                        <span>{{ "Delete" | localize }}</span>
-                                    </button>
-                                </mat-menu>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -83,9 +68,6 @@
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
                     </abp-pagination-controls>
                 </div>
-                <button mat-mini-fab color="primary" class="pull-right" (click)="createEvento()">
-                    <mat-icon>add</mat-icon>
-                </button>
             </div>
         </div>
     </div>

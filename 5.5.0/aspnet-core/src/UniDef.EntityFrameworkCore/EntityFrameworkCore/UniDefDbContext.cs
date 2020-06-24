@@ -45,13 +45,13 @@ namespace UniDef.EntityFrameworkCore
                 .HasForeignKey(pt => pt.UsuarioSeguidorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            /*
+            
             modelBuilder.Entity<Asistente>()
                 .HasOne(ev => ev.UsuarioAsistente)
-                .WithMany(e => e.EventosCreados)
+                .WithMany(e => e.EventosAsistidos)
                 .HasForeignKey(asi => asi.UsuarioAsistenteId)
                 .OnDelete(DeleteBehavior.Restrict);
-                */
+                
             
         }
     }

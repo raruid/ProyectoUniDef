@@ -21,7 +21,7 @@ import { ExtUserProfileComponent } from './ext-user.profile/ext-user-profile.com
                 component: AppComponent,
                 children: [
                     { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
-                    { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
+                    { path: 'usuarios', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'catalogo/evento/:id', component: EventosComponent, data: { permission: 'Pages.Eventos' }},

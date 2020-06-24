@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto } from 'shared/paged-listing-component-base';
-import { UserServiceProxy, UserDto, UserDtoPagedResultDto } from '@shared/service-proxies/service-proxies';
+import { UserServiceProxy, UserDto, UserDtoPagedResultDto, UserDatosPerfilDto } from '@shared/service-proxies/service-proxies';
 import { CreateUserDialogComponent } from './create-user/create-user-dialog.component';
 import { EditUserDialogComponent } from './edit-user/edit-user-dialog.component';
 import { Moment } from 'moment';
@@ -27,6 +27,8 @@ class PagedUsersRequestDto extends PagedRequestDto {
 })
 export class UsersComponent extends PagedListingComponentBase<UserDto> {
     users: UserDto[] = [];
+    usuarioDatos: UserDatosPerfilDto;
+    usuarios: UserDatosPerfilDto[] = [];
     keyword = '';
     isActive: boolean | null;
 
@@ -69,6 +71,28 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
             .subscribe((result: UserDtoPagedResultDto) => {
                 this.users = result.items;
                 this.showPaging(result, pageNumber);
+            });
+
+        this._userService
+            .getDatosUsuarioLogado()
+            .pipe(
+                finalize(() => {
+                    finishedCallback();
+                })
+            )
+            .subscribe(result => {
+                this.usuarioDatos = result;
+            });  
+            
+        this._userService
+            .getUsers()
+            .pipe(
+                finalize(() => {
+                    finishedCallback();
+                })
+            )
+            .subscribe(result => {
+                this.usuarios = result.items;
             });
     }
 

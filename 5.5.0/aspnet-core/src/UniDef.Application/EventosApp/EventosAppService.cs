@@ -67,12 +67,28 @@ namespace UniDef.EventosApp
             return ObjectMapper.Map<CreateEventoDto>(evento);
         }
 
-        public async Task<EventoDatosPerfilDto> GetEventoPorId(long id) 
+        public async Task<EventoDatosPerfilDto> ModificarDatosEvento(EventoDatosPerfilDto input)
+        {
+            CheckUpdatePermission();
+
+            var evento = await this.GetEventoPorId(input.Id);
+
+            evento.NombreEvento = input.NombreEvento;
+            evento.Fecha = input.Fecha;
+            evento.Hora = input.Hora;
+            evento.Requisitos = input.Requisitos;
+            evento.AforoMaximo = input.AforoMaximo;
+            evento.Descripcion_Evento = input.Descripcion_Evento;
+
+            return ObjectMapper.Map<EventoDatosPerfilDto>(evento);
+        }
+
+        public async Task<Evento> GetEventoPorId(long id) 
         {
             var evento = await _eventoRepository.GetAll()
                 .FirstOrDefaultAsync(even => even.Id == id);
 
-            return ObjectMapper.Map<EventoDatosPerfilDto>(evento);
+            return evento;
         }
 
         public async Task<ListResultDto<EventoDatosPerfilDto>> GetEventosUserLogado()
@@ -93,6 +109,27 @@ namespace UniDef.EventosApp
                 .Where(ev => ev.CreatorUserId == id);
 
             return new ListResultDto<EventoDatosPerfilDto>(ObjectMapper.Map<List<EventoDatosPerfilDto>>(eventos));
+        }
+
+        public async Task<EventoAsistentesDto> GetAsistentesEvento(long id)
+        {
+            var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
+
+            var asistentes = _eventoRepository.GetAll()
+                .Include(us => us.UsuariosAsistentes)
+                .ThenInclude(us => us.UsuarioAsistente)
+                .Where(us => us.Id == id)
+                .FirstOrDefault();
+
+            return ObjectMapper.Map<EventoAsistentesDto>(asistentes);
+        }
+
+        public async Task EliminarEvento(long id)
+        {
+            var evento = await this.GetEventoPorId(id);
+
+            await _eventoRepository.DeleteAsync(evento);
+            CurrentUnitOfWork.SaveChanges();
         }
 
         /*

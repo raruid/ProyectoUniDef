@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector } from '@angular/core';
-import { EventoDto, EventosServiceProxy, UserDto, UserServiceProxy, UserDatosPerfilDto, SeguidoresServiceProxy, SeguidorDto } from '@shared/service-proxies/service-proxies';
+import { EventoDto, EventosServiceProxy, UserDto, UserServiceProxy, UserDatosPerfilDto, SeguidoresServiceProxy, SeguidorDto, EventoDatosPerfilDto, UserSeguidosDto, UserSeguidoresDto } from '@shared/service-proxies/service-proxies';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { MatDialog } from '@angular/material';
 import { finalize } from 'rxjs/operators';
@@ -15,11 +15,13 @@ class PagedRolesRequestDto extends PagedRequestDto {
   templateUrl: './ext-user-profile.component.html'
 })
 
-export class ExtUserProfileComponent extends PagedListingComponentBase<EventoDto> {
+export class ExtUserProfileComponent extends PagedListingComponentBase<EventoDatosPerfilDto> {
 
-    eventosUsuario: EventoDto[] = [];
+    eventosUsuario: EventoDatosPerfilDto[] = [];
     usuarioDatos: UserDatosPerfilDto;
     usuarioLogadoDatos: UserDatosPerfilDto;
+    numeroSeguidos: UserSeguidosDto;
+    numeroSeguidores: UserSeguidoresDto;
     seguidor: SeguidorDto;
     _id = '';
     filterText = '';
@@ -27,6 +29,7 @@ export class ExtUserProfileComponent extends PagedListingComponentBase<EventoDto
         injector: Injector,
         private _seguidorService: SeguidoresServiceProxy,
         private _userService: UserServiceProxy,
+        private _eventoService: EventosServiceProxy,
         private _route: ActivatedRoute
     ) {
         super(injector);
@@ -51,6 +54,17 @@ export class ExtUserProfileComponent extends PagedListingComponentBase<EventoDto
                 this.usuarioDatos = result;
             });
 
+        this._eventoService
+            .getEventosUser(parseInt(this._id))
+            .pipe(
+                finalize(() => {
+                    finishedCallback();
+                })
+            )
+            .subscribe(result  => {
+                this.eventosUsuario = result.items;
+            });    
+
         this._seguidorService
             .esSeguidor(parseInt(this._id))
             .pipe(
@@ -72,6 +86,29 @@ export class ExtUserProfileComponent extends PagedListingComponentBase<EventoDto
             .subscribe(result  => {
                 this.usuarioLogadoDatos = result;
             });
+
+        this._userService
+            .getSeguidoresUser(parseInt(this._id))
+            .pipe(
+                finalize(() => {
+                    finishedCallback();
+                })
+            )
+            .subscribe(result => {
+                this.numeroSeguidores = result;
+            });
+
+        this._userService
+            .getSeguidosUser(parseInt(this._id))
+            .pipe(
+                finalize(() => {
+                    finishedCallback();
+                })
+            )
+            .subscribe(result => {
+                this.numeroSeguidos = result;
+            });
+            
         }
 
     seguirUsuario(id: number) {
@@ -92,7 +129,7 @@ export class ExtUserProfileComponent extends PagedListingComponentBase<EventoDto
               });
     }
 
-    delete(entity: EventoDto): void {
+    delete(entity: EventoDatosPerfilDto): void {
         throw new Error("Method not implemented.");
     }
 

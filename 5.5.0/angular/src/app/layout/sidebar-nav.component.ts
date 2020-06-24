@@ -10,15 +10,16 @@ import { MenuItem } from '@shared/layout/menu-item';
 export class SideBarNavComponent extends AppComponentBase {
 
     menuItems: MenuItem[] = [
-        new MenuItem(this.l('HomePage'), '', 'home', '/app/home'),
+        new MenuItem(this.l('Inicio'), '', 'home', '/app/home'),
 
         new MenuItem(this.l('Tenants'), 'Pages.Tenants', 'business', '/app/tenants'),
-        new MenuItem(this.l('Usuarios'), 'Pages.Users', 'people', '/app/users'),
+        new MenuItem(this.l('Usuarios'), 'Pages.Users', 'people', '/app/usuarios'),
         new MenuItem(this.l('Roles'), 'Pages.Roles', 'local_offer', '/app/roles'),
-        new MenuItem(this.l('Perfil'), 'Pages.Users', 'people', '/app/user-profile'),
-        new MenuItem(this.l('Catalogo'), 'Pages.Users', 'people', '/app/user-profile'),
-        new MenuItem(this.l('About'), '', 'info', '/app/about'),
+        new MenuItem(this.l('Perfil'), 'Pages.Users', 'person_pin', '/app/perfil'),
+        new MenuItem(this.l('Catalogo'), 'Pages.Users', 'pages', '/app/catalogo'),
+        //new MenuItem(this.l('About'), '', 'info', '/app/about'),
 
+        /*
         new MenuItem(this.l('MultiLevelMenu'), '', 'menu', '', [
             new MenuItem('ASP.NET Boilerplate', '', '', '', [
                 new MenuItem('Home', '', '', 'https://aspnetboilerplate.com/?ref=abptmpl'),
@@ -35,6 +36,7 @@ export class SideBarNavComponent extends AppComponentBase {
                 new MenuItem('Documents', '', '', 'https://aspnetzero.com/Documents?ref=abptmpl')
             ])
         ])
+        */
     ];
 
     constructor(

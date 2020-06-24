@@ -11,7 +11,7 @@ export class AppConsts {
     };
 
     static readonly localization = {
-        defaultLocalizationSourceName: 'FOOC'
+        defaultLocalizationSourceName: 'UniDef'
     };
 
     static readonly authorization = {

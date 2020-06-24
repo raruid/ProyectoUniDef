@@ -1,5 +1,5 @@
 <form autocomplete="off" #editUserModal="ngForm" (ngSubmit)="save()">
-    <h1 mat-dialog-title>{{ "EditUser" | localize }}</h1>
+    <h1 mat-dialog-title>{{ "Editar usuario" | localize }}</h1>
     <mat-dialog-content style="width:800px;height:250px;">
       <mat-tab-group>
         <mat-tab [label]="'UserDetails' | localize">
@@ -83,7 +83,7 @@
     </mat-dialog-content>
     <div mat-dialog-actions align="end">
       <button mat-button type="button" [disabled]="saving" (click)="close(false)">
-        {{ "Cancel" | localize }}
+        {{ "Cancelar" | localize }}
       </button>
       <button
         mat-flat-button
@@ -92,7 +92,7 @@
         color="primary"
         [disabled]="!editUserModal.form.valid || saving"
       >
-        {{ "Save" | localize }}
+        {{ "Guardar" | localize }}
       </button>
     </div>
   </form>

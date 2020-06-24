@@ -39,7 +39,6 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
 // eventos
 import {EventosComponent} from '@app/eventos/eventos.component';
-import { EditEventoDialogComponent } from './eventos/edit-evento/edit-evento-dialog.component';
 import { EventosServiceProxy, SeguidoresServiceProxy, AsistentesServiceProxy } from '@shared/service-proxies/service-proxies';
 // perfil
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -47,6 +46,11 @@ import { EditUserProfileDialogComponent } from './user-profile/edit-user-profile
 import { CatalogoComponent } from './catalogo/catalogo.component';
 import { CreateEventoDialogComponent } from './user-profile/create-evento/create-evento-dialog.component';
 import { ExtUserProfileComponent } from './ext-user.profile/ext-user-profile.component';
+import { EditEventoProfileDialogComponent } from './user-profile/edit-evento/edit-evento-profile-dialog.component';
+import { FotoComponent } from './fotos/foto.component';
+import { CambiarFotoDialogComponent } from './user-profile/cambiar-foto/cambiar-foto-dialog.component';
+//Google-maps
+//import { GoogleMapsModule } from '@angular/google-maps'
 
 
 @NgModule({
@@ -77,12 +81,14 @@ import { ExtUserProfileComponent } from './ext-user.profile/ext-user-profile.com
     //eventos
     EventosComponent,
     //CreateEventoDialogComponent,
-    EditEventoDialogComponent,
     //perfil
     UserProfileComponent,
     EditUserProfileDialogComponent,
+    EditEventoProfileDialogComponent,
     CreateEventoDialogComponent,
+    CambiarFotoDialogComponent,
     AppComponent,
+    FotoComponent,
     //perfil de usuario externo
     ExtUserProfileComponent,
     //catalogo
@@ -99,6 +105,7 @@ import { ExtUserProfileComponent } from './ext-user.profile/ext-user-profile.com
     AppRoutingModule,
     ServiceProxyModule,
     SharedModule,
+    //GoogleMapsModule,
     NgxPaginationModule
   ],
   providers: [EventosServiceProxy, SeguidoresServiceProxy, AsistentesServiceProxy],
@@ -114,11 +121,11 @@ import { ExtUserProfileComponent } from './ext-user.profile/ext-user-profile.com
     EditUserDialogComponent,
     ResetPasswordDialogComponent,
     // eventos
-    EditEventoDialogComponent,
     // perfil
     CreateEventoDialogComponent,
+    EditEventoProfileDialogComponent,
+    CambiarFotoDialogComponent,
     EditUserProfileDialogComponent
-    
   ]
 })
 export class AppModule {}

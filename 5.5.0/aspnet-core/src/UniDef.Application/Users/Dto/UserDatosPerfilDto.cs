@@ -14,5 +14,6 @@ namespace UniDef.Users.Dto
         public int Age { get; set; }
         public string StudyingAt { get; set; }
         public string AboutMe { get; set; }
+        public string UrlFoto { get; set; }
     }
 }

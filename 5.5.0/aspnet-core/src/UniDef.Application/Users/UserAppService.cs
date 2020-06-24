@@ -23,6 +23,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UniDef.EventosApp.Dto;
 using UniDef.Seguidores;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace UniDef.Users
 {
@@ -128,8 +131,6 @@ namespace UniDef.Users
         {
             var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
 
-            
-
             return new ListResultDto<EventoDto>(ObjectMapper.Map<List<EventoDto>>(userLogado.EventosCreados));
         }
 
@@ -189,6 +190,44 @@ namespace UniDef.Users
             return ObjectMapper.Map<UserSeguidosDto>(seguidos);
         }
 
+        public async Task<UserSeguidoresDto> GetSeguidoresUser(long id)
+        {
+            var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
+
+            var seguidores = _userRepository.GetAll()
+                .Include(us => us.UsuariosSeguidos)
+                .ThenInclude(us => us.UsuarioSeguidor)
+                .Where(us => us.Id == id)
+                .FirstOrDefault();
+
+            return ObjectMapper.Map<UserSeguidoresDto>(seguidores);
+        }
+
+        public async Task<UserSeguidosDto> GetSeguidosUser(long id)
+        {
+            var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
+
+            var seguidos = _userRepository.GetAll()
+                .Include(us => us.UsuariosSeguidores)
+                .ThenInclude(us => us.UsuarioSeguido)
+                .Where(us => us.Id == id)
+                .FirstOrDefault();
+
+            return ObjectMapper.Map<UserSeguidosDto>(seguidos);
+        }
+
+        public async Task<ListResultDto<UserDatosPerfilDto>> GetUsers()
+        {
+            var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
+
+            var users = _userRepository.GetAll()
+                .Where(us => us.Id != 2)
+                .Where(us => us.Id != userLogado.Id);
+
+            return new ListResultDto<UserDatosPerfilDto>(ObjectMapper.Map<List<UserDatosPerfilDto>>(users));
+        }
+
+        /*
         public async Task<int> GetNumeroSeguidosUser(long id)
         {
             var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
@@ -240,6 +279,42 @@ namespace UniDef.Users
 
             return seguidores.UsuariosSeguidores.Count;
         }
+        */
+
+        //Inicio de los componentes de la foto
+
+        public async Task<string> UploadFoto(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                throw new UserFriendlyException("Por favor, seleccione una fotografía");
+
+            var folderName = Path.Combine("Resources", "ProfilePics");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+            long currentUserId = _abpSession.UserId.Value;
+
+            var user = _userManager.GetUserById(currentUserId);
+
+            var uniqueFileName = $"{currentUserId}_profilepic.png";
+            var dbPath = Path.Combine(folderName, uniqueFileName);
+
+            user.UrlFoto = "http://localhost:21021/Resources/ProfilePics/" + currentUserId + "_profilepic.png";
+            //user.UrlFoto = "C:/Users/Usuario/Desktop/UniDefV2/5.5.0/aspnet-core/src/UniDef.Web.Host/Resources/ProfilePics/" + currentUserId + "_profilepic.png";
+
+
+            using (var fileStream = new FileStream(Path.Combine(filePath, uniqueFileName), FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            return dbPath;
+        }
+
+        //Fin de la foto
 
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {

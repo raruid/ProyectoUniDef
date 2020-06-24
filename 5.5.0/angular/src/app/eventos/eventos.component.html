@@ -44,15 +44,27 @@
         <h1 class="nombreEvento">{{evento.nombreEvento}}</h1>
         <!--<h1 class="nombreEvento">Id del creador {{evento.creatorUserId}}</h1>
         <h1 class="nombreEvento">Id del user {{usuarioLogado.id}}</h1>-->
-        <img class="avatar" alt="User" height="136" src="assets/images/user.png" width="136"/>
-        <div *ngIf="asistente.usuarioAsistenteId == usuarioLogado.id; else desapuntar">
-            <button type="button" class="btn btn-danger" (click)="dejarDeAsistir(this._id)">Desapuntarse del evento</button>
+        <img class="avatar" alt="User" height="136" src="assets/images/evento.jpg" width="136"/>
+
+        <div *ngIf="evento.creatorUserId == usuarioLogado.id; else lleno">
+            <button type="button" class="btn btn-info">Eres el creador de este evento</button>
         </div>
-        <ng-template #desapuntar>
-            <div>
-                <button type="button" class="btn btn-success" (click)="asistirEvento(this._id)">Apuntarse al evento</button>
+        <ng-template #lleno>
+            <div *ngIf="asistente.usuarioAsistenteId == usuarioLogado.id; else gestion">
+                <button type="button" class="btn btn-danger" (click)="dejarDeAsistir(this._id)">Desapuntarse del evento</button>
             </div>
+            <ng-template #gestion>
+                <div *ngIf="this.asistentesEvento.length == evento.aforoMaximo; else desapuntar">
+                    <button type="button" class="btn btn-danger">El evento está completo</button>
+                </div>
+                <ng-template #desapuntar>
+                    <div>
+                        <button type="button" class="btn btn-success" (click)="asistirEvento(this._id)">Apuntarse al evento</button>
+                    </div>
+                </ng-template>
+            </ng-template>
         </ng-template>
+
         <div class="botonDerecha" *ngIf="evento.creatorUserId != usuarioLogado.id">
             <button type="button" class="btn btn-primary"><a [routerLink]="['/app/usuarios',evento.creatorUserId]">Información del creador</a></button>
         </div>
@@ -81,6 +93,7 @@
             <div>
                 <h2><mat-icon>person_outline</mat-icon> {{ "Asistentes" | localize }}</h2>
             </div>
+            <h4>Actualmente hay {{this.asistentesEvento.length}} de {{evento.aforoMaximo}} personas apuntadas a este evento</h4>
         </div>
     </div>
 </body>

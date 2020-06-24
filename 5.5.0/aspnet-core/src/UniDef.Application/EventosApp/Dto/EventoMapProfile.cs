@@ -14,6 +14,10 @@ namespace UniDef.EventosApp.Dto
             CreateMap<Evento, EventoDto>().ReverseMap();
             CreateMap<Evento, CreateEventoDto>().ReverseMap();
             CreateMap<Evento, EventoDatosPerfilDto>().ReverseMap();
+
+            CreateMap<Evento, EventoAsistentesDto>()
+                .ForMember(us => us.UsuariosAsistentes, opts => opts.MapFrom(us => us.UsuariosAsistentes))
+                .ReverseMap();
         }
     }
 }

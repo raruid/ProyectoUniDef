@@ -72,24 +72,5 @@ namespace UniDef.SeguidoresApp
             await _seguidorRepository.DeleteAsync(seguidor);
             CurrentUnitOfWork.SaveChanges();
         }
-        public async Task<ListResultDto<SeguidorDto>> GetSeguidoresUserLogado()
-        {
-            var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
-
-            var seguidores = _seguidorRepository.GetAllList()
-                .Where(se => se.UsuarioSeguidoId == userLogado.Id);
-
-            return new ListResultDto<SeguidorDto>(ObjectMapper.Map<List<SeguidorDto>>(seguidores));
-        }
-
-        public async Task<ListResultDto<SeguidorDto>> GetSeguidosUserLogado()
-        {
-            var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
-
-            var seguidores = _seguidorRepository.GetAllList()
-                .Where(se => se.UsuarioSeguidorId == userLogado.Id);
-
-            return new ListResultDto<SeguidorDto>(ObjectMapper.Map<List<SeguidorDto>>(seguidores));
-        }
     }
 }

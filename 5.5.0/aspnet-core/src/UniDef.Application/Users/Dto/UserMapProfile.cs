@@ -17,9 +17,11 @@ namespace UniDef.Users.Dto
             CreateMap<User, UserSeguidoresDto>()
                 .ForMember(us => us.UsuariosSeguidores, opts => opts.MapFrom(us => us.UsuariosSeguidos))
                 .ReverseMap();
+
             CreateMap<User, UserSeguidosDto>()
                 .ForMember(us => us.UsuariosSeguidos, opts => opts.MapFrom(us => us.UsuariosSeguidores))
                 .ReverseMap();
+                
 
             CreateMap<CreateUserDto, User>();
             CreateMap<CreateUserDto, User>().ForMember(x => x.Roles, opt => opt.Ignore());

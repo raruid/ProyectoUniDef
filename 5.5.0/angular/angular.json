@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "FOOC": {
+    "UniDef": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -113,21 +113,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "FOOC:build"
+            "browserTarget": "UniDef:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "FOOC:build:production"
+              "browserTarget": "UniDef:build:production"
             },
             "hmr": {
-              "browserTarget": "FOOC:build:hmr"
+              "browserTarget": "UniDef:build:hmr"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "FOOC:build"
+            "browserTarget": "UniDef:build"
           }
         },
         "test": {
@@ -213,7 +213,7 @@
         }
       }
     },
-    "FOOC-e2e": {
+    "UniDef-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -222,7 +222,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "FOOC:serve"
+            "devServerTarget": "UniDef:serve"
           }
         },
         "lint": {
@@ -237,7 +237,7 @@
       }
     }
   },
-  "defaultProject": "FOOC",
+  "defaultProject": "UniDef",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

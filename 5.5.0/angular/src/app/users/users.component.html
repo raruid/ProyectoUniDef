@@ -27,15 +27,6 @@
                                     <input matInput [placeholder]="l('Filter')" [(ngModel)]="keyword" name="keyword">
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-6">
-                                <mat-form-field>
-                                    <mat-select [placeholder]="l('IsActive')" [(ngModel)]="isActive" name="isActive">
-                                        <mat-option value="">{{ 'All' | localize }}</mat-option>
-                                        <mat-option value="true">{{ 'Yes' | localize }}</mat-option>
-                                        <mat-option value="false">{{ 'No' | localize }}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
                             <div class="col-md-12 text-right p-r-25">
                                 <button mat-raised-button color="primary" (click)="getDataPage(1)">{{ 'Search' | localize }}</button>
                             </div>
@@ -47,17 +38,13 @@
                     <thead>
                         <tr>
                             <th>{{ "UserName" | localize }}</th>
-                            <th>{{ "FullName" | localize }}</th>
-                            <th>{{ "EmailAddress" | localize }}</th>
-                            <th>
-                                <div style="text-align:center">{{ "IsActive" | localize }}</div>
-                            </th>
-                            <th>{{ "Actions" | localize }}</th>
+                            <th>{{ "Nombre" | localize }}</th>
+                            <th>{{ "Edad" | localize }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="
-                let user of (users
+                let user of (usuarios
                   | paginate
                     : {
                         id: 'server',
@@ -66,17 +53,14 @@
                         totalItems: totalItems
                       })
               ">
-                            <td>{{ user.userName }}</td>
-                            <td>{{ user.fullName }}</td>
-                            <td>{{ user.emailAddress }}</td>
-                            <td align="center">
-                                <i class="material-icons check_box" *ngIf="user.isActive">
-                                    check_box
-                                </i>
-                                <i class="material-icons indeterminate_check_box" *ngIf="!user.isActive">
-                                    indeterminate_check_box
-                                </i>
-                            </td>
+                      
+                            <td><a [routerLink]="['/app/usuarios/',user.id]" *ngIf="user.id != usuarioDatos.id; else perfil">{{ user.userName }}</a></td>
+                            <ng-template #perfil>
+                                <td><a [routerLink]="['/app/perfil']">{{ user.userName }}</a></td>
+                            </ng-template>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.age }}</td>
+                            <!--
                             <td>
                                 <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
                                     <mat-icon>menu</mat-icon>
@@ -96,6 +80,7 @@
                                     </button>
                                 </mat-menu>
                             </td>
+                            -->
                         </tr>
                     </tbody>
                 </table>
@@ -103,9 +88,6 @@
                     <abp-pagination-controls (pageChange)="getDataPage($event)" id="server">
                     </abp-pagination-controls>
                 </div>
-                <button mat-mini-fab color="primary" class="pull-right" (click)="createUser()">
-                    <mat-icon>add</mat-icon>
-                </button>
             </div>
         </div>
     </div>

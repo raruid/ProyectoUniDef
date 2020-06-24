@@ -6,6 +6,8 @@ import { finalize } from 'rxjs/operators';
 import { finished } from 'stream';
 import { EditUserProfileDialogComponent } from './edit-user-profile/edit-user-profile-dialog.component';
 import { CreateEventoDialogComponent } from './create-evento/create-evento-dialog.component';
+import { EditEventoProfileDialogComponent } from './edit-evento/edit-evento-profile-dialog.component';
+import { CambiarFotoDialogComponent } from './cambiar-foto/cambiar-foto-dialog.component';
 
 class PagedRolesRequestDto extends PagedRequestDto {
     filter: string;
@@ -16,7 +18,7 @@ class PagedRolesRequestDto extends PagedRequestDto {
   templateUrl: './user-profile.component.html'
 })
 
-export class UserProfileComponent extends PagedListingComponentBase<EventoDatosPerfilDto> {
+export class UserProfileComponent extends PagedListingComponentBase<number> {
 
     eventosUsuario: EventoDatosPerfilDto[] = [];
     seguidores: UserSeguidoresDto;
@@ -27,7 +29,6 @@ export class UserProfileComponent extends PagedListingComponentBase<EventoDatosP
         injector: Injector,
         private _userService: UserServiceProxy,
         private _eventoService: EventosServiceProxy,
-        private _seguidoresService: SeguidoresServiceProxy,
         private _dialog: MatDialog
     ) {
         super(injector);
@@ -104,6 +105,7 @@ export class UserProfileComponent extends PagedListingComponentBase<EventoDatosP
             .subscribe(result => {
                 this.seguidos = result;
             });
+
         }
 
     editUser(): void {
@@ -134,8 +136,39 @@ export class UserProfileComponent extends PagedListingComponentBase<EventoDatosP
         });
     }
 
-    delete(entity: EventoDatosPerfilDto): void {
-        throw new Error("Method not implemented.");
+    editEvento(evento: EventoDatosPerfilDto): void{
+        let EditEventoDialog;
+
+        EditEventoDialog = this._dialog.open(EditEventoProfileDialogComponent
+            , {data: evento.id}
+            );
+
+        EditEventoDialog.afterClosed().subscribe(result => {
+            if (result) {
+                this.refresh();
+            }
+        });        
+    }
+
+    cambiarFotoPerfil(): void{
+        let CambiarFotoDialog;
+
+        CambiarFotoDialog = this._dialog.open(CambiarFotoDialogComponent);
+
+            CambiarFotoDialog.afterClosed().subscribe(result => {
+            if (result) {
+                this.refresh();
+            }
+        });           
+    }
+
+    delete(id: number): void {
+        this._eventoService
+            .delete(id)
+            .subscribe(result  => {
+                this.refresh();
+                abp.notify.success(this.l('Evento eliminado'));
+              });
     }
 
 }

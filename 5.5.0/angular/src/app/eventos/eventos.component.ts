@@ -1,12 +1,11 @@
 
 import { Component,  Injector } from '@angular/core';
-import {EventosServiceProxy, EventoDto, AuthenticateResultModel, EventoDtoPagedResultDto, EventoDatosPerfilDto, UserServiceProxy, UserDatosPerfilDto, AsistentesServiceProxy, AsistenteDto } from 'shared/service-proxies/service-proxies';
+import {EventosServiceProxy, EventoDto, AuthenticateResultModel, EventoDtoPagedResultDto, EventoDatosPerfilDto, UserServiceProxy, UserDatosPerfilDto, AsistentesServiceProxy, AsistenteDto, EventoAsistentesDto } from 'shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import {PagedListingComponentBase,PagedRequestDto} from '@shared/paged-listing-component-base';
 import { MatDialog } from '@angular/material';
 //import { CreateEventoDialogComponent } from '../user-profile/create-evento/create-evento-dialog.component';
-import { EditEventoDialogComponent } from './edit-evento/edit-evento-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 
 class PagedRolesRequestDto extends PagedRequestDto {
@@ -32,6 +31,7 @@ export class EventosComponent extends PagedListingComponentBase<EventoDatosPerfi
     evento: EventoDatosPerfilDto;
     usuarioLogado: UserDatosPerfilDto;
     asistente: AsistenteDto;
+    asistentesEvento: AsistenteDto [] = [];
     filterText = '';
     _id = '';
     constructor(
@@ -84,7 +84,18 @@ export class EventosComponent extends PagedListingComponentBase<EventoDatosPerfi
             )
             .subscribe(result => {
                 this.asistente = result;
-        })    
+        }) 
+        
+        this._asistenteService
+        .getAsistentesEvento(parseInt(this._id))
+        .pipe(
+            finalize(() => {
+                finishedCallback();
+            })
+        )
+        .subscribe(result => {
+            this.asistentesEvento = result.items;
+    })  
     //ngOnInit() {
     //    this._eventoService.getAll('', 0, 20)
     //        .subscribe(result =>

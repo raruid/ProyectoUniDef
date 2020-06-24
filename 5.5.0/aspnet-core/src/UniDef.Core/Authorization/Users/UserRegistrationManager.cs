@@ -60,10 +60,9 @@ namespace UniDef.Authorization.Users
 
             user.SetNormalizedNames();
            
-            foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
-            {
-                user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
-            }
+
+            user.Roles.Add(new UserRole(tenant.Id, user.Id, 7));
+            
 
             await _userManager.InitializeOptionsAsync(tenant.Id);
 

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Abp.Application.Services.Dto;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace UniDef.EventosApp.Dto
 {
-    public class EventoDatosPerfilDto
+    public class EventoDatosPerfilDto : EntityDto
     {
         public string NombreEvento { get; set; }
         public string Fecha { get; set; }

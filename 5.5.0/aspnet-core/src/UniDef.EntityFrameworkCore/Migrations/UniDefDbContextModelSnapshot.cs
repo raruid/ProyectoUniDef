@@ -1541,6 +1541,9 @@ namespace UniDef.Migrations
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UrlFoto")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(256)")
@@ -1887,9 +1890,9 @@ namespace UniDef.Migrations
                         .HasForeignKey("EventoId1");
 
                     b.HasOne("UniDef.Authorization.Users.User", "UsuarioAsistente")
-                        .WithMany()
+                        .WithMany("EventosAsistidos")
                         .HasForeignKey("UsuarioAsistenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

@@ -34,6 +34,11 @@
             color: ghostwhite;
         }
 
+        .botones{
+            display: inline;
+            margin: 10px;
+        }
+
         a{
             text-decoration: none;
             color: currentColor;
@@ -209,14 +214,21 @@
 
 <body ng-cloak ng-controller="MainCtrl">
     <div class="header">
-        <img class="avatar" alt="User" height="192" src="assets/images/user.png" width="192"/>
+        <div>
+            <img class="avatar" height="162" src="/assets/images/user.png" width="162" *ngIf="usuarioDatos.urlFoto == 'null'; else foto"/>
+        </div>
+        <ng-template #foto>
+            <div>
+                <img class="avatar" height="192" src="{{usuarioDatos.urlFoto}}" width="192"/>
+            </div>
+        </ng-template>
         <h1 class="user-name">{{usuarioDatos.userName}}</h1>
-        <div *ngIf="seguidor.usuarioSeguidorId == usuarioLogadoDatos.id && seguidor.usuarioSeguidoId == usuarioDatos.id; else seguir">
+        <div class="botones" *ngIf="seguidor.usuarioSeguidorId == usuarioLogadoDatos.id && seguidor.usuarioSeguidoId == usuarioDatos.id; else seguir">
             <button type="button" class="btn btn-danger" (click)="dejarDeSeguir(usuarioDatos.id)">Dejar de seguir</button>
         </div>
         <ng-template #seguir>
             <div>
-                <button type="button" class="btn btn-success" (click)="seguirUsuario(usuarioDatos.id)">Seguir</button>
+                <button class="botones" type="button" class="btn btn-success" (click)="seguirUsuario(usuarioDatos.id)">Seguir</button>
             </div>
         </ng-template>
         </div>
@@ -236,9 +248,9 @@
                 </ul>
             </div>
             <div class="section">
-                <h3>Statistics</h3>
-                <p><span class="badge">332</span> Following</p>
-                <p><span class="badge">124</span> Followers</p>
+                <h3>Social</h3>
+                <p><span class="badge">{{this.numeroSeguidos.usuariosSeguidos.length}}</span> Seguidos</p>
+                <p><span class="badge">{{this.numeroSeguidores.usuariosSeguidores.length}}</span> Seguidores</p>
             </div>
         </div>
     </div>
@@ -260,7 +272,6 @@
                                 <th>{{ "Nombre" | localize }}</th>
                                 <th>{{ "Fecha" | localize }}</th>
                                 <th>{{ "Hora" | localize }}</th>
-                                <th>{{ "Actions" | localize }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -274,16 +285,11 @@
                             totalItems: totalItems
                           })
                   ">
-                                <td><a [routerLink]="['/app/eventos/evento',evento.id]">{{ evento.nombreEvento }}</a></td>
+                                <td><a [routerLink]="['/app/catalogo/evento',eventoUsuario.id]">{{ eventoUsuario.nombreEvento }}</a></td>
                                 <td>{{ eventoUsuario.fecha }}</td>
                                 <td>{{ eventoUsuario.hora }}</td>
-                                <td>
-                                    <button class="action-button" mat-icon-button [matMenuTriggerFor]="actionsMenu">
-                                        <mat-icon>menu</mat-icon>
-                                    </button>
-                                </td>
                             </tr>
-                        </tbody>-->
+                        </tbody>
                     </table>
                 </div>
             </div>

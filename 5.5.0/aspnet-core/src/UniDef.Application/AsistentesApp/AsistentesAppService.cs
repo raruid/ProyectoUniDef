@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniDef.Asistentes;
@@ -69,6 +70,16 @@ namespace UniDef.AsistentesApp
 
             await _asistenteRepository.DeleteAsync(asistente);
             CurrentUnitOfWork.SaveChanges();
+        }
+
+        public async Task<ListResultDto<AsistenteDto>> GetAsistentesEvento(long id)
+        {
+            var userLogado = await _userManager.GetUserByIdAsync(AbpSession.GetUserId());
+
+            var asistentes = _asistenteRepository.GetAllList()
+                .Where(se => se.EventoId == id);
+
+            return new ListResultDto<AsistenteDto>(ObjectMapper.Map<List<AsistenteDto>>(asistentes));
         }
     }
 }

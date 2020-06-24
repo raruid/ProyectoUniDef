@@ -24,6 +24,11 @@
             text-align: right;
         }
 
+        .botones{
+            display: inline;
+            margin: 10px;
+        }
+
         .avatar{
             border-radius: 50%;
         }
@@ -209,12 +214,22 @@
 
 <body ng-cloak ng-controller="MainCtrl">
     <div class="header">
-        <img class="avatar" alt="User" height="192" src="assets/images/user.png" width="192"/>
+        <div>
+            <img class="avatar" height="162" src="/assets/images/user.png" width="162" *ngIf="usuarioDatos.urlFoto == 'null'; else foto"/>
+        </div>
+        <ng-template #foto>
+            <div>
+                <img class="avatar" height="192" src="{{usuarioDatos.urlFoto}}" width="192"/>
+            </div>
+        </ng-template>
         <h1 class="user-name">{{usuarioDatos.userName}}</h1>
-        <div class="crear-nuevo-evento">
+        <div class="botones">
             <button type="button" class="btn btn-primary" (click)="createEvento()">Nuevo Evento</button>
         </div>
-        <div class="editar-perfil">
+        <div class="botones">
+            <button type="button" class="btn btn-info" (click)="cambiarFotoPerfil()">Cambiar foto de perfil</button>
+        </div>
+        <div class="botones">
             <button type="button" class="btn btn-success" (click)="editUser()">Editar Perfil</button>
         </div>
     </div>
@@ -231,9 +246,9 @@
                 </ul>
             </div>
             <div class="section">
-                <h3>Statistics</h3>
-                <p><span class="badge">332</span> Following</p>
-                <p><span class="badge">124</span> Followers</p>
+                <h3>Social</h3>
+                <p><span class="badge">{{this.seguidos.usuariosSeguidos.length}}</span> Seguidos</p>
+                <p><span class="badge">{{this.seguidores.usuariosSeguidores.length}}</span> Seguidores</p>
             </div>
         </div>
     </div>
@@ -283,7 +298,7 @@
                                             <mat-icon>edit</mat-icon>
                                             <span>{{ "Edit" | localize }}</span>
                                         </button>
-                                        <button mat-menu-item (click)="delete(evento)">
+                                        <button mat-menu-item (click)="delete(evento.id)">
                                             <mat-icon>delete</mat-icon>
                                             <span>{{ "Delete" | localize }}</span>
                                         </button>
@@ -308,7 +323,7 @@
                             <tr *ngFor="
                     let user of (seguidores.usuariosSeguidores)
                   ">
-                                <td><a [routerLink]="['/app/usuarios',user.id]">{{ user.name }}</a></td>
+                                <td>{{ user.name }}</td>
                                 <td>{{ user.age }}</td>
                             </tr>
                         </tbody>
@@ -329,7 +344,7 @@
                             <tr *ngFor="
                     let user2 of (seguidos.usuariosSeguidos)
                   ">
-                                <td><a [routerLink]="['/app/usuarios',user2.id]">{{ user2.name }}</a></td>
+                                <td>{{ user2.name}}</td>
                                 <td>{{ user2.age }}</td>
                             </tr>
                         </tbody>

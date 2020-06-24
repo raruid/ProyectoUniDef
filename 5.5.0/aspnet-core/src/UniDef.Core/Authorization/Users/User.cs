@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using UniDef.Asistentes;
 using UniDef.Eventos;
 using UniDef.Seguidores;
 
@@ -17,11 +18,13 @@ namespace UniDef.Authorization.Users
         public int Age { get; set; }
         public string StudyingAt { get; set; }
         public string  AboutMe { get; set; }
+        public string UrlFoto { get; set; }
 
         //LO DE ABAJO ESTABA COMENTADO CUANDO HICE LA PRIMERA MIGRACION
         public ICollection<Evento> EventosCreados { get; set; }
         public ICollection<Seguidor> UsuariosSeguidores { get; set; }
         public ICollection<Seguidor> UsuariosSeguidos { get; set; }
+        public ICollection<Asistente> EventosAsistidos { get; set; }
 
         public const string DefaultPassword = "123qwe";
 
